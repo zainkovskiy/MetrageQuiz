@@ -3,6 +3,7 @@ import { LoaderFunction, useLoaderData, useNavigate } from 'react-router-dom';
 import { getOneQuize } from '../../core/api';
 import { IQouzeSlide } from '../../core/types/quize';
 import SliderContainer from '../../containers/SliderContainer';
+import QuizeSlideContent from '../../components/QuizeSlideContent';
 
 interface LoaderData {
   quize: IQouzeSlide;
@@ -17,7 +18,7 @@ const SlideQuize: React.FC = () => {
   };
   return (
     <SliderContainer<IQouzeSlide> onClose={handleClose} awaitArg={quize}>
-      test
+      <QuizeSlideContent />
     </SliderContainer>
   );
 };

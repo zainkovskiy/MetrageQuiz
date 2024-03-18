@@ -7,7 +7,7 @@ import { variantsBackground, variantsContent } from './variants';
 
 interface ISliderContainer<T> {
   onClose: () => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   awaitArg: T;
 }
 const SliderContainer = <T,>(props: ISliderContainer<T>) => {

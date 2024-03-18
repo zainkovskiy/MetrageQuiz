@@ -1,7 +1,7 @@
 export interface IQuestion {
   UID: number;
   answerType: string;
-  answer: IAnswer[];
+  answers: IAnswer[];
   question: string;
 }
 export interface IAnswer {

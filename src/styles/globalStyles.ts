@@ -30,6 +30,6 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
   #root{
-    font-family: 'CeraCY';
+    font-family: CeraCY, sans-serif;
   }
 `;

@@ -25,7 +25,4 @@ export const SlideQuizeContent = styled.div`
   overflow: auto;
   box-sizing: border-box;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
