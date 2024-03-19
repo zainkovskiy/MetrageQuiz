@@ -14,7 +14,7 @@ const SlideQuize: React.FC = () => {
   const { quize } = useLoaderData() as LoaderData;
 
   const handleClose = () => {
-    navigate('/');
+    navigate('/quize');
   };
   return (
     <SliderContainer<IQouzeSlide> onClose={handleClose} awaitArg={quize}>

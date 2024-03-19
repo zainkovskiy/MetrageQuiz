@@ -4,7 +4,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist', 'v-0.0.2'),
     filename: 'index.js',
   },
   resolve: {
@@ -15,6 +15,7 @@ module.exports = {
     //   router: path.resolve(__dirname, 'src', 'router.tsx'),
     // },
   },
+  devtool: 'eval-cheap-source-map',
   module: {
     rules: [
       {

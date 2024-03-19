@@ -4,7 +4,7 @@ import SlideQuize, { loaderQuize } from './pages/SlideQuize';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/quize',
     element: <MainPage />,
     children: [
       {
