@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import * as S from './styled';
 import SliderBlockContainer from '../../containers/SliderBlockContainer';
-import { useAsyncValue } from 'react-router-dom';
-import { IQouzeSlide } from '../../core/types/quize';
+import { Link, useAsyncValue } from 'react-router-dom';
+import { IQuizeSlide } from '../../core/types/quize';
 import Text from '../ui/Text';
 import moment from 'moment';
 import Title from '../ui/Title';
@@ -12,16 +12,21 @@ import Questions from '../Questions';
 
 const QuizeSlideContent: React.FC = () => {
   const [start, setStart] = useState(false);
-  const quize = useAsyncValue() as IQouzeSlide;
+  const quize = useAsyncValue() as IQuizeSlide;
   const toggleStart = () => {
     setStart(!start);
   };
-
   return (
     <S.QuizeSlideContent>
       <SliderBlockContainer flex jc='space-between'>
         <Text>ID: {quize.UID}</Text>
-        <Text>Пройдено: {moment(quize.dueDate).format('DD.MM.YYYY')} </Text>
+        {quize.dueDate && (
+          <Text>Пройдено: {moment(quize.dueDate).format('DD.MM.YYYY')} </Text>
+        )}
+      </SliderBlockContainer>
+      <SliderBlockContainer>
+        <Link to={`/quize/edit/${quize.UID}`}>edit</Link>
+        <button>назначить</button>
       </SliderBlockContainer>
       <SliderBlockContainer flex jc='flex-end'>
         <Text>Сотрудник: {quize.user.fullName}</Text>

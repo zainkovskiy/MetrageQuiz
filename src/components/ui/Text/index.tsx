@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './styled';
 
 interface TextProps {
-  children: (string | number)[];
+  children: string | number | (string | number)[];
   size?: number;
   color?: string;
   bold?: boolean;

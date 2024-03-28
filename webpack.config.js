@@ -4,7 +4,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
-    path: path.resolve(__dirname, 'dist', 'v-0.0.2'),
+    path: path.resolve(__dirname, 'dist', 'v-0.0.3'),
     filename: 'index.js',
   },
   resolve: {
@@ -37,14 +37,15 @@ module.exports = {
         },
       },
       {
-        test: /\.svg$/,
-        use: {
-          loader: '@svgr/webpack',
-          options: {
-            typescript: true,
-            ext: 'tsx',
-          },
-        },
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: /url/, // *.svg?url
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        use: ['@svgr/webpack'],
       },
     ],
   },

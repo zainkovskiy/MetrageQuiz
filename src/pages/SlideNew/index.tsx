@@ -1,20 +1,23 @@
 import React, { Suspense, useState } from 'react';
-import { Await } from 'react-router-dom';
-import { LoaderFunction, useLoaderData, useNavigate } from 'react-router-dom';
+import SliderContainer from '../../containers/SliderContainer';
+import {
+  Await,
+  LoaderFunction,
+  useLoaderData,
+  useNavigate,
+} from 'react-router-dom';
+import QuizeSlideNew from '../../components/QuizeSlideNew';
 import { getOneQuize } from '../../core/api';
 import { IQuizeSlide } from '../../core/types/quize';
-import SliderContainer from '../../containers/SliderContainer';
-import QuizeSlideContent from '../../components/QuizeSlideContent';
 
 interface LoaderData {
   quize: IQuizeSlide;
 }
 
-const SlideQuize: React.FC = () => {
+const SlideNew: React.FC = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
-  const { quize } = useLoaderData() as LoaderData;
-
+  const { quize } = (useLoaderData() as LoaderData) || {};
   const handleClose = () => {
     setTimeout(() => {
       navigate('/quize');
@@ -22,7 +25,7 @@ const SlideQuize: React.FC = () => {
     setOpen(false);
   };
   return (
-    <SliderContainer onClose={handleClose} open={open}>
+    <SliderContainer open={open} onClose={handleClose}>
       <Suspense
         fallback={
           <div
@@ -39,15 +42,14 @@ const SlideQuize: React.FC = () => {
         }
       >
         <Await resolve={quize}>
-          <QuizeSlideContent />
+          <QuizeSlideNew />
         </Await>
       </Suspense>
     </SliderContainer>
   );
 };
-export const loaderQuize: LoaderFunction = async ({ params }) => {
+export const loaderQuizeEdit: LoaderFunction = async ({ params }) => {
   console.log(params.id);
   return { quize: getOneQuize() };
 };
-
-export default SlideQuize;
+export default SlideNew;

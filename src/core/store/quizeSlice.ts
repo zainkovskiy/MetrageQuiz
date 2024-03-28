@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ApiModule } from '../models/data.models';
+import { ApiModule, ApiModuleOne } from '../models/data.models';
 import { IStages } from '../types/stages';
 import { IQuize } from '../types/quize';
 

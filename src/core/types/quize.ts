@@ -9,7 +9,7 @@ export interface IQuize {
   title: string;
   user: IUser;
 }
-export interface IQouzeSlide {
+export interface IQuizeSlide {
   UID: number;
   color: string;
   dueDate: string;
@@ -17,5 +17,26 @@ export interface IQouzeSlide {
   title: string;
   youtubelink: string;
   testData: IQuestion[];
+  contentType: string;
+  contentURL: string;
   user: IUser;
 }
+
+// const qouzeSlide = {
+//   // UID
+// // color
+// // dueDate
+// // stageId
+// // title
+// // youtubelink
+// // testData
+// // user
+// // contentType
+// // contentURL
+
+// description
+// numberOfAttempts
+// resultGrid
+// rightsEdit
+// startDate
+// }
