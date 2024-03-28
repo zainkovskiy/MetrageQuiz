@@ -76,6 +76,7 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
       })
     );
   };
+  //TODO: замегнить S.EditNewWindow на DialogWindow
   return (
     <S.EditNewWindow
       onClick={(e) => e.stopPropagation()}

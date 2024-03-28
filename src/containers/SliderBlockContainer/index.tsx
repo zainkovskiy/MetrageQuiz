@@ -4,6 +4,7 @@ import * as S from './styled';
 interface SliderBlockContainerProps {
   column?: boolean;
   flex?: boolean;
+  full?: boolean;
   children?: React.ReactNode;
   jc?: 'center' | 'space-between' | 'space-around' | 'flex-start' | 'flex-end';
   ai?: 'center' | 'flex-start' | 'flex-end';
@@ -14,6 +15,7 @@ const SliderBlockContainer: React.FC<SliderBlockContainerProps> = ({
   column,
   children,
   flex,
+  full,
   jc,
   ai,
   layout,
@@ -22,6 +24,7 @@ const SliderBlockContainer: React.FC<SliderBlockContainerProps> = ({
     <S.SliderBlockContainer
       $column={column}
       $flex={flex}
+      $full={full}
       $jc={jc}
       $ai={ai}
       layout={layout}

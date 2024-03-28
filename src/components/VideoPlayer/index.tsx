@@ -3,13 +3,14 @@ import * as S from './styled';
 
 interface VideoPlayerProps {
   src: string;
+  height: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, height }) => {
   return (
     <S.VideoPlayer
       width='100%'
-      height='315'
+      height={height || '375'}
       src={src}
       title='YouTube video player'
       // frameborder='0'

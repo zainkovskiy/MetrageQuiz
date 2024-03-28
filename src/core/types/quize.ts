@@ -9,6 +9,10 @@ export interface IQuize {
   title: string;
   user: IUser;
 }
+export interface IResult {
+  number: string;
+  isRight: boolean;
+}
 export interface IQuizeSlide {
   UID: number;
   color: string;
@@ -20,6 +24,8 @@ export interface IQuizeSlide {
   contentType: string;
   contentURL: string;
   user: IUser;
+  numberOfAttempts: number;
+  resultGrid: IResult[];
 }
 
 // const qouzeSlide = {
@@ -33,10 +39,10 @@ export interface IQuizeSlide {
 // // user
 // // contentType
 // // contentURL
-
-// description
 // numberOfAttempts
 // resultGrid
+
+// description
 // rightsEdit
 // startDate
 // }

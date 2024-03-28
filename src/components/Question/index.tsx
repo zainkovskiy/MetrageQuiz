@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { IQuestion } from '../../core/types/questions';
+import React, { useEffect, useRef, useState } from 'react';
+import { IAnswer, IQuestion } from '../../core/types/questions';
 import * as S from './styled';
-import { useAsyncValue } from 'react-router-dom';
 
 interface QustionsProps {
   question: IQuestion;
+  setNewAnswer: (answers: IAnswer[]) => void;
 }
 
 const Question: React.FC<QustionsProps> = (props) => {
-  const { question } = props;
+  const { question, setNewAnswer } = props;
   const [answers, setAnswers] = useState(question.answers);
+  const firstMount = useRef(true);
+  useEffect(() => {
+    if (firstMount.current) return;
+    setNewAnswer(answers);
+  }, [answers]);
+  useEffect(() => {
+    if (firstMount?.current) {
+      firstMount.current = false;
+    }
+  }, []);
   const handleAnswer: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const id = e.target.id;
     const checked = e.target.checked;
