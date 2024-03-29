@@ -10,11 +10,13 @@ import {
 } from 'react-hook-form';
 
 interface EditNewQuestionProps {
+  editQestion?: IQuestion | null;
   onClose: () => void;
   addNewQuestion: (question: IQuestion) => void;
 }
 
 const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
+  editQestion,
   onClose,
   addNewQuestion,
 }) => {
@@ -24,13 +26,13 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
     setValue,
     getValues,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<IQuestion>({
-    defaultValues: {
+    defaultValues: editQestion || {
       UID: Date.now(),
       answerType: 'single',
       answers: [],
-      question: '',
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -57,10 +59,10 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
     );
   };
   const onSubmit: SubmitHandler<IQuestion> = (data) => {
-    if (data.answers.length < 2) {
-      setError('answers', { message: 'min 2 answer' });
-      return;
-    }
+    // if (data.answers.length < 2) {
+    //   setError('answers', { message: 'min 2 answer' });
+    //   return;
+    // }
     addNewQuestion(data);
     onClose();
   };
@@ -98,7 +100,7 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
             <input
               type='text'
               placeholder='Ваш вопрос'
-              value={field.value}
+              defaultValue={field.value || ''}
               onChange={field.onChange}
             />
           )}
@@ -144,6 +146,20 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
       {errors?.answers && (
         <span style={{ color: 'red' }}>{errors.answers.message}</span>
       )}
+      <div>
+        загрузчика нет положи сюда ссылку фото
+        <Controller
+          name='imageUrl'
+          control={control}
+          render={({ field }) => (
+            <input
+              type='text'
+              onChange={field.onChange}
+              defaultValue={field.value || ''}
+            />
+          )}
+        />
+      </div>
       <div>
         anwers
         <button type='button' onClick={addNewAnswer}>

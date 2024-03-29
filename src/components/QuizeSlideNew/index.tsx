@@ -9,21 +9,25 @@ import { IQuizeSlide } from '../../core/types/quize';
 
 const QuizeSlideNew: React.FC = () => {
   const quize = useAsyncValue() as IQuizeSlide;
-  console.log(quize);
 
   const [contentType, setContentType] = useState(
     quize ? quize.contentType : 'youtube'
   );
-  const [qestions, setQuestions] = useState<IQuestion[]>(
+  const [questions, setQuestions] = useState<IQuestion[]>(
     quize ? quize.testData : []
   );
   const [windowQestion, setWindowQestion] = useState(false);
-  const [editWindowQestion, setEditWindowQestion] = useState(null);
+  const [editWindowQestion, setEditWindowQestion] = useState<IQuestion | null>(
+    null
+  );
   const handleContentType: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setContentType(e.currentTarget.id);
   };
   const handleWindowQuestion = () => {
     setWindowQestion(!windowQestion);
+  };
+  const handleEidtQuestion = (question: IQuestion) => {
+    setEditWindowQestion(question);
   };
   const haadleWindowClose = () => {
     if (windowQestion) {
@@ -33,8 +37,19 @@ const QuizeSlideNew: React.FC = () => {
       setEditWindowQestion(null);
     }
   };
-  const addNewQuestion = (qestion: IQuestion) => {
-    setQuestions([...qestions, qestion]);
+  const addNewQuestion = (question: IQuestion) => {
+    const find = questions.find((item) => item.UID === question.UID);
+    if (find) {
+      //TODO: подумать как сократить
+      const arr = questions;
+      arr.splice(arr.indexOf(find), 1, question);
+      setQuestions(arr);
+      return;
+    }
+    setQuestions([...questions, question]);
+  };
+  const removeQuestion = (UID: number) => {
+    setQuestions((prevState) => prevState.filter((item) => item.UID !== UID));
   };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -90,7 +105,7 @@ const QuizeSlideNew: React.FC = () => {
         <label>
           Проходной балл: <input type='number' />
         </label>
-        {qestions.map((item, idx) => (
+        {questions.map((item, idx) => (
           <div key={item.UID} style={{ border: '1px solid' }}>
             <div
               style={{
@@ -99,9 +114,24 @@ const QuizeSlideNew: React.FC = () => {
                 gap: '0.5rem',
               }}
             >
-              <button>edit</button>
-              <button>delete question</button>
+              <button
+                onClick={() => {
+                  handleEidtQuestion(item);
+                }}
+              >
+                edit
+              </button>
+              <button
+                onClick={() => {
+                  removeQuestion(item.UID);
+                }}
+              >
+                delete question
+              </button>
             </div>
+            {item?.imageUrl && (
+              <img src={item.imageUrl} style={{ width: '100%' }} />
+            )}
             <span>
               {idx + 1 + '. '}
               {item.question}
@@ -123,6 +153,7 @@ const QuizeSlideNew: React.FC = () => {
         <EditNewQuestion
           onClose={haadleWindowClose}
           addNewQuestion={addNewQuestion}
+          editQestion={editWindowQestion}
         />
       </DialogWindow>
     </div>
