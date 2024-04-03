@@ -5,3 +5,8 @@ export const QuizeSlideContent = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
+export const QuizeWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;

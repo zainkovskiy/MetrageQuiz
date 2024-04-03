@@ -27,6 +27,12 @@ export interface IQuizeSlide {
   numberOfAttempts: number;
   resultGrid: IResult[];
 }
+export interface IAppointData {
+  allChiefs: boolean;
+  allInterns: boolean;
+  allRealtors: boolean;
+  trainingId: number;
+}
 
 // const qouzeSlide = {
 //   // UID

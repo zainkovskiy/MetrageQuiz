@@ -31,5 +31,6 @@ export const SliderBlockContainer = styled(
       right: 0;
       height: 100%;
       border-radius: 0;
+      z-index: 999;
     `}
 `;

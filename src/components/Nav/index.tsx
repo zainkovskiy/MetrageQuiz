@@ -4,6 +4,8 @@ import Logo from '../../assets/images/logo.svg';
 import Text from '../ui/Text';
 import { useAppSelector } from '../../core/hooks/hookStore';
 import LinkRoute from '../ui/LinkRoute';
+import Checkbox from '../ui/Checkbox';
+import Label from '../ui/Label';
 
 const Nav: React.FC = () => {
   const { rightsToMove } = useAppSelector((state) => state.quize);

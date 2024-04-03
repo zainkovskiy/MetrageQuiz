@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './styled';
 import SliderBlockContainer from '../../containers/SliderBlockContainer';
-import { Link, useAsyncValue } from 'react-router-dom';
+import { useAsyncValue } from 'react-router-dom';
 import { IQuizeSlide, IResult } from '../../core/types/quize';
 import Text from '../ui/Text';
 import moment from 'moment';
@@ -12,14 +12,18 @@ import Questions from '../Questions';
 import { getResult } from '../../core/api';
 import DialogWindow from '../DialogWindow';
 import EditAppoint from '../EditAppoint';
+import Button from '../ui/Button';
+import LinkRoute from '../ui/LinkRoute';
 
 const QuizeSlideContent: React.FC = () => {
   const quize = useAsyncValue() as IQuizeSlide;
   const [start, setStart] = useState(false);
+  const firstMount = useRef(true);
   const [openAppoint, setOpenAppoint] = useState(false);
   const [openFullScreen, setOpenFullScreen] = useState(false);
   const [result, setResult] = useState<IResult[]>(quize?.resultGrid || []);
   useEffect(() => {
+    if (firstMount.current) return;
     if (start) return;
     getResult(quize).then((data) => {
       if (data?.resultGrid && data?.resultGrid?.length > 0) {
@@ -27,6 +31,11 @@ const QuizeSlideContent: React.FC = () => {
       }
     });
   }, [start]);
+  useEffect(() => {
+    if (firstMount.current) {
+      firstMount.current = false;
+    }
+  }, []);
   const toggleStart = () => {
     setStart(!start);
   };
@@ -43,20 +52,23 @@ const QuizeSlideContent: React.FC = () => {
         <Text>Сотрудник: {quize.user.fullName}</Text>
       </SliderBlockContainer>
       <SliderBlockContainer flex jc='space-between'>
-        <div>
+        <S.QuizeWrap>
           <Text>Попыток: {quize.numberOfAttempts}</Text>
           {quize.dueDate && (
             <Text>Пройдено: {moment(quize.dueDate).format('DD.MM.YYYY')} </Text>
           )}
-        </div>
-        <div>
-          <Link to={`/quize/edit/${quize.UID}`}>edit</Link>
-          <button onClick={toggleAppoint}>назначить</button>
-        </div>
+        </S.QuizeWrap>
+        <S.QuizeWrap>
+          <LinkRoute to={`/quize/edit/${quize.UID}`}>Редактировать</LinkRoute>
+          <Button onClick={toggleAppoint}>Назначить</Button>
+        </S.QuizeWrap>
       </SliderBlockContainer>
       <SliderBlockContainer flex column full={openFullScreen}>
         <Title>
-          Материал: <button onClick={toggleFullScreen}>full</button>
+          Материал:{' '}
+          <Button variant='line' onClick={toggleFullScreen}>
+            {openFullScreen ? 'Свернуть' : 'Развернуть'}
+          </Button>
         </Title>
         <VideoPlayer
           src={quize.youtubelink}
@@ -66,9 +78,9 @@ const QuizeSlideContent: React.FC = () => {
       <SliderBlockContainer flex column layout>
         <Title>
           Тест:{' '}
-          <button onClick={toggleStart}>
-            {start ? 'Закончиить' : 'Начать'}
-          </button>
+          <Button onClick={toggleStart} variant='line'>
+            {start ? 'Закончить' : 'Начать'}
+          </Button>
         </Title>
         <QustionsContainer>{start && <Questions />}</QustionsContainer>
       </SliderBlockContainer>

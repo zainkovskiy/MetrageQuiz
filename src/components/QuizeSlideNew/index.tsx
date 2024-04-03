@@ -6,6 +6,14 @@ import { IQuestion } from '../../core/types/questions';
 import EditNewQuestion from '../EditNewQuestion';
 import { useAsyncValue } from 'react-router-dom';
 import { IQuizeSlide } from '../../core/types/quize';
+import ToggleButton from '../ui/ToggleButton';
+import ToggleButtonGroup from '../ui/ToggleButtonGroup';
+import Input from '../ui/Input/Input';
+import Button from '../ui/Button';
+import TextArea from '../ui/TextArea';
+import Uploader from '../ui/Uploader';
+import Label from '../ui/Label';
+import { uploadFiles } from '../../core/api';
 
 const QuizeSlideNew: React.FC = () => {
   const quize = useAsyncValue() as IQuizeSlide;
@@ -20,8 +28,11 @@ const QuizeSlideNew: React.FC = () => {
   const [editWindowQestion, setEditWindowQestion] = useState<IQuestion | null>(
     null
   );
-  const handleContentType: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setContentType(e.currentTarget.id);
+  const handleContentType = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    newValue: string
+  ) => {
+    setContentType(newValue);
   };
   const handleWindowQuestion = () => {
     setWindowQestion(!windowQestion);
@@ -51,60 +62,40 @@ const QuizeSlideNew: React.FC = () => {
   const removeQuestion = (UID: number) => {
     setQuestions((prevState) => prevState.filter((item) => item.UID !== UID));
   };
+  const handleUploader: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.currentTarget?.files) {
+      uploadFiles(e.currentTarget.files);
+    }
+  };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <SliderBlockContainer flex column>
         <Title>Материал:</Title>
         <div>
-          <label htmlFor='youtube'>
-            <input
-              type='radio'
-              name='contentType'
-              id='youtube'
-              checked={contentType === 'youtube'}
-              onChange={handleContentType}
-            />
-            Youtube
-          </label>
-          <label htmlFor='pdf'>
-            <input
-              type='radio'
-              name='contentType'
-              id='pdf'
-              checked={contentType === 'pdf'}
-              onChange={handleContentType}
-            />
-            PDF
-          </label>
+          <ToggleButtonGroup
+            value={contentType}
+            onChange={handleContentType}
+            fullWidth
+          >
+            <ToggleButton value='youtube'>youtube</ToggleButton>
+            <ToggleButton value='pdf'>pdf</ToggleButton>
+          </ToggleButtonGroup>
         </div>
-        {contentType === 'youtube' && (
-          <div>
-            <p style={{ margin: 0 }}>Ссылка на контент:</p>
-            <input type='text' />
-          </div>
-        )}
+        <div></div>
+        {contentType === 'youtube' && <Input label='Ссылка на контент:' />}
         {contentType === 'pdf' && (
-          <div>
-            <p style={{ margin: 0 }}>Положите сюда файлик:</p>
-            <input type='file' />
-          </div>
+          <Label label='Загрузите файл' position='top-left'>
+            <Uploader onChange={handleUploader} />
+          </Label>
         )}
-        <div>
-          <p style={{ margin: 0 }}>Описание модуля:</p>
-          <textarea
-            style={{ width: '100%', resize: 'none', boxSizing: 'border-box' }}
-            rows={10}
-          />
-        </div>
+        <TextArea label='Описание модуля:' rows={10} />
       </SliderBlockContainer>
       <SliderBlockContainer flex column>
         <Title>
           Вопросы:
-          <button onClick={handleWindowQuestion}>Добавить вопрос</button>
+          <Button onClick={handleWindowQuestion}>Добавить вопрос</Button>
         </Title>
-        <label>
-          Проходной балл: <input type='number' />
-        </label>
+        <Input label='Проходной балл:' />
         {questions.map((item, idx) => (
           <div key={item.UID} style={{ border: '1px solid' }}>
             <div

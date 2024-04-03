@@ -13,7 +13,11 @@ const DialogContainer: React.FC<IDialogContainer> = ({
   width,
 }) => {
   return (
-    <S.DialogContainer onClick={(e) => e.stopPropagation()}>
+    <S.DialogContainer
+      onClick={(e) => e.stopPropagation()}
+      $width={width}
+      $height={height}
+    >
       {children}
     </S.DialogContainer>
   );
