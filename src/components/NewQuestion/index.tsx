@@ -1,70 +1,63 @@
-import React, { memo } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import Input from '../ui/Input/Input';
-import Button from '../ui/Button';
-import { IAnswer } from '../../core/types/questions';
+import React from 'react';
+import { IQuestion } from '../../core/types/questions';
 import * as S from './styled';
-import Label from '../ui/Label';
-import Checkbox from '../ui/Checkbox';
+import Button from '../ui/Button';
+import Text from '../ui/Text';
+import Done from '../../assets/images/done.svg';
 
 interface INewQuestion {
-  id: string;
+  question: IQuestion;
   index: number;
-  remove: (index: number) => void;
+  handleEidtQuestion: (question: IQuestion) => void;
+  removeQuestion: (UID: number) => void;
 }
 
-const NewQuestion: React.FC<INewQuestion> = memo(({ id, index, remove }) => {
-  const { control, getValues, setValue } = useFormContext();
-  const handleRemove = () => {
-    remove(index);
-  };
-  const showIsQuestionType = () => {
-    if (getValues('answerType') === 'multiple') return;
-    const answer: IAnswer = getValues('answers')[index];
-    setValue(
-      'answers',
-      getValues('answers').map((item: IAnswer) => {
-        if (item.UID === answer.UID) {
-          return item;
-        }
-        return { ...item, isRightOption: false };
-      })
-    );
-  };
+const NewQuestion: React.FC<INewQuestion> = ({
+  question,
+  index,
+  handleEidtQuestion,
+  removeQuestion,
+}) => {
   return (
     <S.NewQuestion>
-      <Controller
-        name={`answers.${index}.title`}
-        control={control}
-        render={({ field }) => (
-          <Input
-            onChange={field.onChange}
-            defaultValue={field.value}
-            fullWidth
-          />
-        )}
-      />
-      <Controller
-        name={`answers.${index}.isRightOption`}
-        control={control}
-        render={({ field }) => (
-          <Label label='Верно' gap='0.3rem'>
-            <Checkbox
-              onChange={(e) => {
-                field.onChange(e.target.checked);
-
-                showIsQuestionType();
-              }}
-              checked={field.value}
-            />
-          </Label>
-        )}
-      />
-      <Button variant='line' color='error' onClick={handleRemove}>
-        Удалить
-      </Button>
+      <S.NewQuestionButtons>
+        <Button
+          variant='line'
+          onClick={() => {
+            handleEidtQuestion(question);
+          }}
+        >
+          Редактировать
+        </Button>
+        <Button
+          variant='outline'
+          color='error'
+          onClick={() => {
+            removeQuestion(question.UID);
+          }}
+        >
+          Удалить
+        </Button>
+      </S.NewQuestionButtons>
+      <S.NewQuestionContainer>
+        <div>
+          <Text size={14}>
+            {index}. {question.question}
+          </Text>
+          <S.NewQuestionList>
+            {question.answers.map((answer) => (
+              <S.NewQuestionListItem key={answer.UID}>
+                <Text>
+                  {answer.title} {answer.isRightOption ? '(Верный ответ)' : ''}
+                </Text>
+              </S.NewQuestionListItem>
+            ))}
+          </S.NewQuestionList>
+        </div>
+        {question.imageUrl && <S.NewQuestionImg src={question.imageUrl} />}
+      </S.NewQuestionContainer>
     </S.NewQuestion>
   );
-});
+};
 
 export default NewQuestion;

@@ -17,7 +17,7 @@ export const ButtonStyle = styled.button<IButtonStyleProps>`
   white-space: nowrap;
   color: ${({ theme, color }) => (theme.color ? colors[color].bg : '#fff')};
   background-color: ${({ theme, color }) =>
-    theme.bg ? colors[color].bg : '#fff'};
+    theme.bg ? colors[color].bg : 'transparent'};
   border: ${({ theme, color }) =>
     theme.border ? colors[color].border : '1px solid transparent'};
   transition: color 0.3s, background-color 0.3s, border 0.3s;

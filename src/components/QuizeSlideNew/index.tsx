@@ -14,6 +14,62 @@ import TextArea from '../ui/TextArea';
 import Uploader from '../ui/Uploader';
 import Label from '../ui/Label';
 import { uploadFiles } from '../../core/api';
+import NewQuestion from '../NewQuestion';
+
+const testQ = {
+  UID: 1712222824714,
+  answerType: 'single',
+  imageUrl:
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMup-hD-50SjTcD9W19tYwmejXjAjIgn5NUIPtuq1tZQ&s',
+  answers: [
+    {
+      UID: 1712222825827,
+      isChecked: false,
+      isRightOption: false,
+      title: 'Рон Уизли',
+    },
+    {
+      UID: 1712222826261,
+      isChecked: false,
+      isRightOption: false,
+      title: 'Невилл Лонгботтом',
+    },
+    {
+      UID: 1712222826744,
+      isChecked: false,
+      isRightOption: true,
+      title: 'Драко Малфой',
+    },
+    {
+      UID: 1712222851645,
+      isChecked: false,
+      isRightOption: false,
+      title: 'Драко Уизли',
+    },
+  ],
+  question: 'Кто из этих персонажей не дружит с Гарри Поттером?',
+};
+const testQ1 = {
+  UID: 1712222824724,
+  answerType: 'single',
+  imageUrl:
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Eiffel_Tower_Vertical.JPG/802px-Eiffel_Tower_Vertical.JPG?20080622213711',
+  answers: [
+    {
+      UID: 1712222825827,
+      isChecked: false,
+      isRightOption: false,
+      title: 'Big Ban',
+    },
+    {
+      UID: 1712222826261,
+      isChecked: false,
+      isRightOption: true,
+      title: 'Eiffel Tower',
+    },
+  ],
+  question: 'Waht is it?',
+};
 
 const QuizeSlideNew: React.FC = () => {
   const quize = useAsyncValue() as IQuizeSlide;
@@ -22,7 +78,7 @@ const QuizeSlideNew: React.FC = () => {
     quize ? quize.contentType : 'youtube'
   );
   const [questions, setQuestions] = useState<IQuestion[]>(
-    quize ? quize.testData : []
+    quize ? quize.testData : [testQ, testQ1]
   );
   const [windowQestion, setWindowQestion] = useState(false);
   const [editWindowQestion, setEditWindowQestion] = useState<IQuestion | null>(
@@ -71,17 +127,14 @@ const QuizeSlideNew: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <SliderBlockContainer flex column>
         <Title>Материал:</Title>
-        <div>
-          <ToggleButtonGroup
-            value={contentType}
-            onChange={handleContentType}
-            fullWidth
-          >
-            <ToggleButton value='youtube'>youtube</ToggleButton>
-            <ToggleButton value='pdf'>pdf</ToggleButton>
-          </ToggleButtonGroup>
-        </div>
-        <div></div>
+        <ToggleButtonGroup
+          value={contentType}
+          onChange={handleContentType}
+          fullWidth
+        >
+          <ToggleButton value='youtube'>youtube</ToggleButton>
+          <ToggleButton value='pdf'>pdf</ToggleButton>
+        </ToggleButtonGroup>
         {contentType === 'youtube' && <Input label='Ссылка на контент:' />}
         {contentType === 'pdf' && (
           <Label label='Загрузите файл' position='top-left'>
@@ -97,44 +150,13 @@ const QuizeSlideNew: React.FC = () => {
         </Title>
         <Input label='Проходной балл:' />
         {questions.map((item, idx) => (
-          <div key={item.UID} style={{ border: '1px solid' }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                gap: '0.5rem',
-              }}
-            >
-              <button
-                onClick={() => {
-                  handleEidtQuestion(item);
-                }}
-              >
-                edit
-              </button>
-              <button
-                onClick={() => {
-                  removeQuestion(item.UID);
-                }}
-              >
-                delete question
-              </button>
-            </div>
-            {item?.imageUrl && (
-              <img src={item.imageUrl} style={{ width: '100%' }} />
-            )}
-            <span>
-              {idx + 1 + '. '}
-              {item.question}
-            </span>
-            <div>
-              {item.answers.map((answer) => (
-                <div key={answer.UID}>
-                  {answer.title} {answer?.isRightOption && ' +'}
-                </div>
-              ))}
-            </div>
-          </div>
+          <NewQuestion
+            key={item.UID}
+            question={item}
+            index={idx + 1}
+            handleEidtQuestion={handleEidtQuestion}
+            removeQuestion={removeQuestion}
+          />
         ))}
       </SliderBlockContainer>
       <DialogWindow

@@ -13,7 +13,7 @@ import Label from '../ui/Label';
 import Button from '../ui/Button';
 import ToggleButtonGroup from '../ui/ToggleButtonGroup';
 import ToggleButton from '../ui/ToggleButton';
-import NewQuestions from '../NewQuestions';
+import NewAnswers from '../NewAnswers';
 import Uploader from '../ui/Uploader';
 import { uploadPhoto } from '../../core/api';
 
@@ -102,7 +102,7 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
               <Uploader onChange={handleUpload} />
             </Label>
           </S.EditNewWrap>
-          <NewQuestions />
+          <NewAnswers />
         </S.EditNewContent>
         <S.EditNewFooter>
           <Button onClick={onClose} variant='outline'>

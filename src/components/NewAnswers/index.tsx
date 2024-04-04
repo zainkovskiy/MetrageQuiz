@@ -1,12 +1,11 @@
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import Label from '../ui/Label';
 import Button from '../ui/Button';
-import NewQuestion from '../NewQuestion';
+import NewAnswer from '../NewAnswer';
 import * as S from './styled';
 import Text from '../ui/Text';
 
-const NewQuestions = () => {
+const NewAnswers = () => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name: 'answers',
@@ -21,7 +20,7 @@ const NewQuestions = () => {
     });
   };
   return (
-    <S.NewQuestions>
+    <S.NewAnswers>
       <div>
         <Text size={14}>Добавить ответ </Text>
         <Button onClick={addNewAnswer} variant='line'>
@@ -29,15 +28,15 @@ const NewQuestions = () => {
         </Button>
       </div>
       {fields.map((answer, index) => (
-        <NewQuestion
+        <NewAnswer
           id={answer.id}
           key={answer.id}
           index={index}
           remove={remove}
         />
       ))}
-    </S.NewQuestions>
+    </S.NewAnswers>
   );
 };
 
-export default NewQuestions;
+export default NewAnswers;

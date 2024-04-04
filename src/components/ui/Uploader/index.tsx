@@ -5,8 +5,6 @@ import Button from '../Button';
 interface IUploader extends Omit<React.ComponentProps<'input'>, 'type'> {}
 
 const Uploader: React.FC<IUploader> = (props) => {
-  console.log('update');
-
   const { ...otherProps } = props;
   const [text, setText] = useState('Файл не выбран');
 
