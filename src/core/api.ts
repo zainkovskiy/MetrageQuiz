@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ApiModuleOne } from './models/data.models';
+import { ApiModuleOne, PhotoApiAnswer } from './models/data.models';
 import type { IQuestion } from './types/questions';
 import { IAppointData, IQuizeSlide } from './types/quize';
 const API = 'https://crm.metragegroup.com/API/REST.php';
@@ -51,16 +51,13 @@ export const uploadPhoto = async (files: FileList) => {
   for (let file of files) {
     data.append('files[]', file);
   }
-  const res = await axios.post(
+  const res = await axios.post<PhotoApiAnswer>(
     'https://crm.metragegroup.com/API/UserPhotoUpload.php',
     data
   );
-  console.log(res);
-
-  // if (res?.statusText === 'OK') {
-  //   return res?.data || [];
-  // }
-  // return [];
+  if (res?.statusText === 'OK') {
+    return res?.data;
+  }
 };
 interface Raw {
   [key: string]: string;

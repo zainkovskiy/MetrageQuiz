@@ -23,7 +23,7 @@ const NewAnswers = () => {
     <S.NewAnswers>
       <div>
         <Text size={14}>Добавить ответ </Text>
-        <Button onClick={addNewAnswer} variant='line'>
+        <Button type='button' onClick={addNewAnswer} variant='line'>
           +
         </Button>
       </div>

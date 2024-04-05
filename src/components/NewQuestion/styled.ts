@@ -26,4 +26,9 @@ export const NewQuestionList = styled.ul`
   margin: 0.5rem 0;
   padding-left: 2rem;
 `;
-export const NewQuestionListItem = styled.li``;
+export const NewQuestionListItem = styled.li<{ $isRight: boolean }>`
+  &::marker {
+    content: attr(${({ $isRight }) => ($isRight ? 'data-icon' : 'data-dot')});
+    ${({ $isRight }) => $isRight && 'color: green;'};
+  }
+`;

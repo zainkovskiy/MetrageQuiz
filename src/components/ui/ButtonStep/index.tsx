@@ -1,5 +1,6 @@
 import React, { JSXElementConstructor } from 'react';
 import * as S from './styled';
+import Button from '../Button';
 
 interface ButtonStepProp {
   steps: number;
@@ -25,13 +26,13 @@ const ButtonStep: React.FC<ButtonStepProp> = ({
   };
   return (
     <S.ButtonStep>
-      <button onClick={onClickPrev} disabled={activeStep === 0}>
-        prev
-      </button>
+      <Button onClick={onClickPrev} disabled={activeStep === 0}>
+        Назад
+      </Button>
       <S.DotGroup>{...getSteps()}</S.DotGroup>
-      <button onClick={onClickNext} disabled={steps - 1 === activeStep}>
-        next
-      </button>
+      <Button onClick={onClickNext} disabled={steps - 1 === activeStep}>
+        Дальше
+      </Button>
     </S.ButtonStep>
   );
 };

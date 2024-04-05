@@ -46,10 +46,13 @@ const NewQuestion: React.FC<INewQuestion> = ({
           </Text>
           <S.NewQuestionList>
             {question.answers.map((answer) => (
-              <S.NewQuestionListItem key={answer.UID}>
-                <Text>
-                  {answer.title} {answer.isRightOption ? '(Верный ответ)' : ''}
-                </Text>
+              <S.NewQuestionListItem
+                key={answer.UID}
+                $isRight={answer.isRightOption}
+                data-dot='&#8226;  '
+                data-icon='&#10004; '
+              >
+                <Text>{answer.title}</Text>
               </S.NewQuestionListItem>
             ))}
           </S.NewQuestionList>

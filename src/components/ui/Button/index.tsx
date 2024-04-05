@@ -14,6 +14,7 @@ const Button: React.FC<IButtonProps> = ({
   fullWidth,
   variant = 'default',
   color = 'primary',
+  type = 'button',
   ...otherProps
 }) => {
   const getTheme = () => {
@@ -29,7 +30,12 @@ const Button: React.FC<IButtonProps> = ({
   const theme = getTheme();
   return (
     <ThemeProvider theme={theme}>
-      <S.ButtonStyle $fullWidth={fullWidth} {...otherProps} color={color}>
+      <S.ButtonStyle
+        $fullWidth={fullWidth}
+        {...otherProps}
+        color={color}
+        type={type}
+      >
         {children}
       </S.ButtonStyle>
     </ThemeProvider>

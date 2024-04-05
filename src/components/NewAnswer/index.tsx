@@ -60,7 +60,7 @@ const NewAnswer: React.FC<INewAnswer> = memo(({ id, index, remove }) => {
           </Label>
         )}
       />
-      <Button variant='line' color='error' onClick={handleRemove}>
+      <Button variant='line' color='error' onClick={handleRemove} type='button'>
         Удалить
       </Button>
     </S.NewAnswer>

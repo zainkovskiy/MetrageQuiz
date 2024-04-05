@@ -30,6 +30,7 @@ const ToggleButton: React.FC<IToggleButton> = ({
       onClick={handleClick}
       $fullWidth={fullWidth}
       $isSelected={selected}
+      type='button'
     >
       {children}
     </S.ToggleButton>

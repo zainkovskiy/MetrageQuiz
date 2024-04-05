@@ -23,7 +23,9 @@ const Uploader: React.FC<IUploader> = (props) => {
 
   return (
     <S.Uploader>
-      <Button onClick={handleClick}>Выберете файл</Button>
+      <Button type='button' onClick={handleClick}>
+        Выберете файл
+      </Button>
       <S.UploaderText>{text}</S.UploaderText>
       <S.HiidernInput
         ref={inputRef}

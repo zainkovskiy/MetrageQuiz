@@ -16,6 +16,7 @@ import ToggleButton from '../ui/ToggleButton';
 import NewAnswers from '../NewAnswers';
 import Uploader from '../ui/Uploader';
 import { uploadPhoto } from '../../core/api';
+import { PhotoApiAnswer } from '../../core/models/data.models';
 
 interface EditNewQuestionProps {
   editQestion?: IQuestion | null;
@@ -55,7 +56,12 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
   };
   const handleUpload: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.currentTarget?.files) {
-      uploadPhoto(e.currentTarget.files);
+      uploadPhoto(e.currentTarget.files).then((data) => {
+        if (data?.URL) {
+          setValue('imageUrl', data.URL);
+        }
+        return;
+      });
     }
   };
   return (
@@ -92,8 +98,8 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
                       cleareAnswersRight();
                     }}
                   >
-                    <ToggleButton value='single'>single</ToggleButton>
-                    <ToggleButton value='multiple'>multiple</ToggleButton>
+                    <ToggleButton value='single'>Один</ToggleButton>
+                    <ToggleButton value='multiple'>Несколько</ToggleButton>
                   </ToggleButtonGroup>
                 </Label>
               )}
@@ -105,7 +111,7 @@ const EditNewQuestion: React.FC<EditNewQuestionProps> = ({
           <NewAnswers />
         </S.EditNewContent>
         <S.EditNewFooter>
-          <Button onClick={onClose} variant='outline'>
+          <Button type='button' onClick={onClose} variant='outline'>
             Закрыть
           </Button>
           <Button type='submit'>Сохранить</Button>

@@ -18,3 +18,11 @@ export interface ApiModuleOne<T> {
   request: string;
   result: T;
 }
+
+export interface PhotoApiAnswer {
+  URL: string;
+  allow: boolean;
+  height: number;
+  original: string;
+  width: number;
+}

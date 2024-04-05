@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as S from './styled';
 import SliderBlockContainer from '../../containers/SliderBlockContainer';
 import Title from '../ui/Title';
 import DialogWindow from '../DialogWindow';
@@ -124,7 +125,7 @@ const QuizeSlideNew: React.FC = () => {
     }
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+    <S.QuizeSlideNew>
       <SliderBlockContainer flex column>
         <Title>Материал:</Title>
         <ToggleButtonGroup
@@ -169,7 +170,7 @@ const QuizeSlideNew: React.FC = () => {
           editQestion={editWindowQestion}
         />
       </DialogWindow>
-    </div>
+    </S.QuizeSlideNew>
   );
 };
 
