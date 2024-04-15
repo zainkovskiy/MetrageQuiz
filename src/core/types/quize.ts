@@ -26,6 +26,14 @@ export interface IQuizeSlide {
   user: IUser;
   numberOfAttempts: number;
   resultGrid: IResult[];
+  rightsEdit: boolean;
+  description: string;
+}
+export interface IQuizeForm {
+  testData: IQuestion[];
+  youtubelink: string;
+  contentType: string;
+  description: string;
 }
 export interface IAppointData {
   allChiefs: boolean;
@@ -49,6 +57,5 @@ export interface IAppointData {
 // resultGrid
 
 // description
-// rightsEdit
 // startDate
 // }

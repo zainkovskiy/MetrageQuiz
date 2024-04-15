@@ -58,10 +58,12 @@ const QuizeSlideContent: React.FC = () => {
             <Text>Пройдено: {moment(quize.dueDate).format('DD.MM.YYYY')} </Text>
           )}
         </S.QuizeWrap>
-        <S.QuizeWrap>
-          <LinkRoute to={`/quize/edit/${quize.UID}`}>Редактировать</LinkRoute>
-          <Button onClick={toggleAppoint}>Назначить</Button>
-        </S.QuizeWrap>
+        {quize.rightsEdit && (
+          <S.QuizeWrap>
+            <LinkRoute to={`/quize/edit/${quize.UID}`}>Редактировать</LinkRoute>
+            <Button onClick={toggleAppoint}>Назначить</Button>
+          </S.QuizeWrap>
+        )}
       </SliderBlockContainer>
       <SliderBlockContainer flex column full={openFullScreen}>
         <Title>

@@ -42,14 +42,13 @@ const SlideNew: React.FC = () => {
         }
       >
         <Await resolve={quize}>
-          <QuizeSlideNew />
+          <QuizeSlideNew onClose={handleClose} />
         </Await>
       </Suspense>
     </SliderContainer>
   );
 };
 export const loaderQuizeEdit: LoaderFunction = async ({ params }) => {
-  console.log(params.id);
-  return { quize: getOneQuize() };
+  return { quize: getOneQuize(params.id || '') };
 };
 export default SlideNew;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const QuizeSlideNew = styled.div`
+export const QuizeSlideNew = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

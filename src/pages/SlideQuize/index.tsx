@@ -46,8 +46,7 @@ const SlideQuize: React.FC = () => {
   );
 };
 export const loaderQuize: LoaderFunction = async ({ params }) => {
-  console.log(params.id);
-  return { quize: getOneQuize() };
+  return { quize: getOneQuize(params.id || '') };
 };
 
 export default SlideQuize;

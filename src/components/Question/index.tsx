@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { IAnswer, IQuestion } from '../../core/types/questions';
 import * as S from './styled';
+import Label from '../ui/Label';
+import Checkbox from '../ui/Checkbox';
 
 interface QustionsProps {
   question: IQuestion;
@@ -9,22 +11,12 @@ interface QustionsProps {
 
 const Question: React.FC<QustionsProps> = (props) => {
   const { question, setNewAnswer } = props;
-  const [answers, setAnswers] = useState(question.answers);
-  const firstMount = useRef(true);
-  useEffect(() => {
-    if (firstMount.current) return;
-    setNewAnswer(answers);
-  }, [answers]);
-  useEffect(() => {
-    if (firstMount?.current) {
-      firstMount.current = false;
-    }
-  }, []);
+  const [change, setChange] = useState(false);
   const handleAnswer: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const id = e.target.id;
     const checked = e.target.checked;
-    setAnswers((prevState) =>
-      prevState.map((item) => {
+    setNewAnswer(
+      question.answers.map((item) => {
         if (item.UID.toString() === id) {
           return { ...item, isChecked: checked };
         }
@@ -33,23 +25,21 @@ const Question: React.FC<QustionsProps> = (props) => {
           : item;
       })
     );
+    setChange(!change);
   };
+
   return (
     <S.Question>
       {question.question}
-      {answers.map((answer) => (
-        <label
-          htmlFor={`${answer.UID}`}
-          key={`question${question.UID}answer${answer.UID}`}
-        >
-          <input
-            type='checkbox'
+      {question.answers.map((answer) => (
+        <Label gap='0.5rem' key={`question${question.UID}answer${answer.UID}`}>
+          <Checkbox
             checked={answer.isChecked}
             id={`${answer.UID}`}
             onChange={handleAnswer}
           />
           {answer.title}
-        </label>
+        </Label>
       ))}
     </S.Question>
   );

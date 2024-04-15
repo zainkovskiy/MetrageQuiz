@@ -3,7 +3,7 @@ export interface IQuestion {
   answerType: string;
   answers: IAnswer[];
   question: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 export interface IAnswer {
   UID: number;
