@@ -19,7 +19,6 @@ export interface IQuizeSlide {
   dueDate: string;
   stageId: number;
   title: string;
-  youtubelink: string;
   testData: IQuestion[];
   contentType: string;
   contentURL: string;
@@ -28,12 +27,14 @@ export interface IQuizeSlide {
   resultGrid: IResult[];
   rightsEdit: boolean;
   description: string;
+  successBall?: number;
 }
 export interface IQuizeForm {
   testData: IQuestion[];
-  youtubelink: string;
+  contentURL: string;
   contentType: string;
   description: string;
+  successBall?: number;
 }
 export interface IAppointData {
   allChiefs: boolean;

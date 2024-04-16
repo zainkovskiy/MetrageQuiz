@@ -34,8 +34,10 @@ const QuizeSlideNew: React.FC<QuizeSlideNewProps> = ({ onClose }) => {
       : {
           contentType: 'youtube',
           description: '',
-          youtubelink: '',
+          contentURL: '',
           testData: [],
+          successBall: undefined,
+          title: '',
         },
   });
   const handleWindowQuestion = () => {
@@ -69,8 +71,13 @@ const QuizeSlideNew: React.FC<QuizeSlideNewProps> = ({ onClose }) => {
     );
   };
   const handleUploader: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.currentTarget?.files) {
-      uploadFiles(e.currentTarget.files);
+    const files = e.currentTarget?.files;
+    if (files) {
+      uploadFiles(files).then((file) => {
+        if (file) {
+          setValue('contentURL', file[0].downloadUrl);
+        }
+      });
     }
   };
   const onSubmit: SubmitHandler<IQuizeForm> = (data) => {
@@ -104,7 +111,7 @@ const QuizeSlideNew: React.FC<QuizeSlideNewProps> = ({ onClose }) => {
           />
           {getValues('contentType') === 'youtube' && (
             <Controller
-              name='youtubelink'
+              name='contentURL'
               control={control}
               render={({ field }) => (
                 <Input
@@ -120,6 +127,17 @@ const QuizeSlideNew: React.FC<QuizeSlideNewProps> = ({ onClose }) => {
               <Uploader onChange={handleUploader} />
             </Label>
           )}
+          <Controller
+            name='title'
+            control={control}
+            render={({ field }) => (
+              <Input
+                label='Заголовок'
+                onChange={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
           <Controller
             name='description'
             control={control}
@@ -138,7 +156,18 @@ const QuizeSlideNew: React.FC<QuizeSlideNewProps> = ({ onClose }) => {
             Вопросы:
             <Button onClick={handleWindowQuestion}>Добавить вопрос</Button>
           </Title>
-          <Input label='Проходной балл:' />
+          <Controller
+            name='successBall'
+            control={control}
+            render={({ field }) => (
+              <Input
+                label='Проходной балл:'
+                type='number'
+                onChange={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
           {getValues('testData').map((item, idx) => (
             <NewQuestion
               key={item.UID}

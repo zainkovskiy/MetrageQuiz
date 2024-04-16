@@ -4,5 +4,7 @@ export const QustionsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 200px;
+  min-height: 350px;
+  box-sizing: border-box;
+  gap: 0.5rem;
 `;

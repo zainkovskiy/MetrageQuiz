@@ -5,3 +5,8 @@ export const Question = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
+export const QuestionWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+`;

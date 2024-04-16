@@ -30,7 +30,10 @@ const Question: React.FC<QustionsProps> = (props) => {
 
   return (
     <S.Question>
-      {question.question}
+      <S.QuestionWrap>
+        {question.question}
+        {question.imageUrl && <img src={question.imageUrl} height={200} />}
+      </S.QuestionWrap>
       {question.answers.map((answer) => (
         <Label gap='0.5rem' key={`question${question.UID}answer${answer.UID}`}>
           <Checkbox

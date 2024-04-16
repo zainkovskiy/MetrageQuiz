@@ -18,6 +18,7 @@ import LinkRoute from '../ui/LinkRoute';
 const QuizeSlideContent: React.FC = () => {
   const quize = useAsyncValue() as IQuizeSlide;
   const [start, setStart] = useState(false);
+  const [isDasabled, setIsDisabled] = useState(false);
   const firstMount = useRef(true);
   const [openAppoint, setOpenAppoint] = useState(false);
   const [openFullScreen, setOpenFullScreen] = useState(false);
@@ -25,6 +26,7 @@ const QuizeSlideContent: React.FC = () => {
   useEffect(() => {
     if (firstMount.current) return;
     if (start) return;
+    setIsDisabled(true);
     getResult(quize).then((data) => {
       if (data?.resultGrid && data?.resultGrid?.length > 0) {
         setResult(data?.resultGrid);
@@ -73,14 +75,14 @@ const QuizeSlideContent: React.FC = () => {
           </Button>
         </Title>
         <VideoPlayer
-          src={quize.youtubelink}
+          src={quize.contentURL}
           height={openFullScreen ? '100%' : ''}
         />
       </SliderBlockContainer>
       <SliderBlockContainer flex column layout>
         <Title>
           Тест:{' '}
-          <Button onClick={toggleStart} variant='line'>
+          <Button onClick={toggleStart} variant='line' disabled={isDasabled}>
             {start ? 'Закончить' : 'Начать'}
           </Button>
         </Title>

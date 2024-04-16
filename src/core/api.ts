@@ -86,7 +86,12 @@ export const uploadFiles = async (files: FileList) => {
   for (let key in raw) {
     data.append(key, raw[key]);
   }
-  const res = await axios.post(
+  interface FileAnswer {
+    downloadUrl: string;
+    UID: number;
+    name: string;
+  }
+  const res = await axios.post<FileAnswer[]>(
     'https://crm.metragegroup.com/API/Upload.php',
     data
   );
